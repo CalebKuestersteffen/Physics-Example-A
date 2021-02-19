@@ -15,6 +15,7 @@ namespace PhysicsExampleA
     {
         Texture2D texture;
         Vector2 position;
+        Vector2 velocity;
 
         /// <summary>
         /// Constructs a new lander sprite 
@@ -31,6 +32,7 @@ namespace PhysicsExampleA
         public void LoadContent(ContentManager content)
         {
             texture = content.Load<Texture2D>("lander");
+            velocity = new Vector2(10, 2);
         }
 
         /// <summary>
@@ -40,6 +42,16 @@ namespace PhysicsExampleA
         public void Update(GameTime gameTime)
         {
             KeyboardState keyboardState = Keyboard.GetState();
+            float t = (float)gameTime.ElapsedGameTime.TotalSeconds;
+
+            Vector2 acceleteration = new Vector2(0, 30);
+            if (keyboardState.IsKeyDown(Keys.Space))
+            {
+                acceleteration += new Vector2(0, -50);
+            }
+
+            velocity += acceleteration * t;
+            position += velocity * t;
 
         }
 
